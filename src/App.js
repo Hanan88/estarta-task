@@ -1,8 +1,13 @@
 import React from "react";
+import Breadcrumb from "./components/Breadcrumb";
+import Filters from "./components/Filters";
+import Logs from "./components/Logs";
 const App = () => {
   return (
-    <div>
-      <h1>Hello</h1>
+    <div className="container">
+      <Breadcrumb />
+      <Filters />
+      <Logs />
     </div>
   );
 };

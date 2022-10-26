@@ -1,0 +1,24 @@
+.breadcrumb {
+  border-bottom: 1px solid #cfcece;
+  padding: 15px 0;
+}
+.breadcrumb-list {
+  list-style: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+.breadcrumb-list__item {
+  display: inline;
+}
+.breadcrumb-list__item + .breadcrumb-list__item:before {
+  content: ">";
+  padding: 7px;
+  color: #0275d8;
+}
+.breadcrumb-list__item a {
+  text-decoration: none;
+  color: #0275d8;
+}
+.breadcrumb-list__item:last-of-type {
+  color: #767676;
+}
