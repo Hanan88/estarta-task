@@ -1,0 +1,29 @@
+.filters__controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.filters__control label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.filters__control input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  width: 13rem;
+  max-width: 100%;
+  border: 1px solid #cfcece;
+  background: #f6f6f6;
+}
+.filters__controls button {
+  padding: 0.5rem;
+  border-radius: 6px;
+  width: 13rem;
+  max-width: 100%;
+  background: #10489b;
+  color: white;
+  border: none;
+}
