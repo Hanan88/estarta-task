@@ -1,3 +1,7 @@
+.logs {
+  box-shadow: 1px 4px 10px 2px #e0e0e0;
+  padding: 15px;
+}
 .logs__table {
   width: 100%;
   border-collapse: collapse;
