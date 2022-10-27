@@ -1,0 +1,16 @@
+.logs__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.logs__table__head th {
+  padding: 10px 0;
+  border-bottom: 1px solid #cfcece;
+  color: #5c5c5c;
+  font-size: 13px;
+}
+.logs__table__body td {
+  padding: 15px 0;
+  border-bottom: 1px solid #e2e2e2;
+  font-size: 14px;
+}
