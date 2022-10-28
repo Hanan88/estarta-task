@@ -3,6 +3,7 @@ import "./Logs.css";
 import "./Pagination.css";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
+import Filters from "./Filters";
 
 const Logs = () => {
   // const [logResponse, setLogResponse] = useState([]);
@@ -33,6 +34,20 @@ const Logs = () => {
     setPageNumber(selected);
   };
 
+  const sorting = (col) => {
+    if (order === "ASC") {
+      const sorted = [...logData].sort((a, b) => (a[col] > b[col] ? 1 : -1));
+      setLogData(sorted);
+      setOrder("DSC");
+    }
+
+    if (order === "DSC") {
+      const sorted = [...logData].sort((a, b) => (a[col] < b[col] ? 1 : -1));
+      setLogData(sorted);
+      setOrder("ASC");
+    }
+  };
+
   const displayLogs = logData
     ?.slice(pagesVisited, pagesVisited + itemsPerPage)
     .map((log) => {
@@ -47,21 +62,6 @@ const Logs = () => {
         </tr>
       );
     });
-
-  const sorting = (col) => {
-    console.log(col, "1");
-    if (order === "ASC") {
-      const sorted = [...logData].sort((a, b) => (a[col] > b[col] ? 1 : -1));
-      setLogData(sorted);
-      setOrder("DSC");
-    }
-
-    if (order === "DSC") {
-      const sorted = [...logData].sort((a, b) => (a[col] < b[col] ? 1 : -1));
-      setLogData(sorted);
-      setOrder("ASC");
-    }
-  };
 
   return (
     <div className="logs">
