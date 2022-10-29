@@ -10,7 +10,6 @@ const Filters = ({
   onApplicationTypeFilter,
   onDateFilter,
 }) => {
-  const [field, setField] = useState('')
   const [filters, setFilters] = useState({
     logId: "",
     actionType: "",
@@ -27,8 +26,7 @@ const Filters = ({
       ...filters,
       [field]: value,
     });
-setField(field)
-    
+
     switch (field) {
       case "logId":
         onLogFilter(value);
@@ -51,9 +49,6 @@ setField(field)
         break;
     }
   };
-  const handleSearchBtn = () =>{
-    console.log(field,"sd");
-  }
 
   return (
     <div className="filters__controls">
@@ -122,7 +117,7 @@ setField(field)
           onChange={handleInput("applicationId")}
         />
       </div>
-      <button onClick={handleSearchBtn}>Search Logger</button>
+      <button>Search Logger</button>
     </div>
   );
 };
