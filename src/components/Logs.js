@@ -1,34 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Logs.css";
 import "./Pagination.css";
 import ReactPaginate from "react-paginate";
-import axios from "axios";
-import Filters from "./Filters";
 
-const Logs = () => {
-  // const [logResponse, setLogResponse] = useState([]);
-  const [logData, setLogData] = useState([]);
+const Logs = ({ logData, setLogData }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const pagesVisited = pageNumber * itemsPerPage;
   const pageCount = Math.ceil(logData?.length / itemsPerPage);
   const [order, setOrder] = useState("ASC");
-
-  const getLogData = async () => {
-    try {
-      const response = await axios.get(
-        "https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f"
-      );
-      // setLogResponse(response.data.result);
-      setLogData(response.data.result.auditLog);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getLogData();
-  }, []);
 
   const changePages = ({ selected }) => {
     setPageNumber(selected);
@@ -47,21 +27,6 @@ const Logs = () => {
       setOrder("ASC");
     }
   };
-
-  const displayLogs = logData
-    ?.slice(pagesVisited, pagesVisited + itemsPerPage)
-    .map((log) => {
-      return (
-        <tr key={log.logId}>
-          <td>{log.logId}</td>
-          <td>{log?.applicationType}</td>
-          <td>{log?.applicationId}</td>
-          <td>{log?.actionType}</td>
-          <td>-/+</td>
-          <td>{log?.creationTimestamp}</td>
-        </tr>
-      );
-    });
 
   return (
     <div className="logs">
@@ -113,7 +78,22 @@ const Logs = () => {
             </th>
           </tr>
         </thead>
-        <tbody className="logs__table__body">{displayLogs}</tbody>
+        <tbody className="logs__table__body">
+          {logData
+            ?.slice(pagesVisited, pagesVisited + itemsPerPage)
+            .map((log, index) => {
+              return (
+                <tr key={index}>
+                  <td>{log.logId}</td>
+                  <td>{log?.applicationType}</td>
+                  <td>{log?.applicationId}</td>
+                  <td>{log?.actionType}</td>
+                  <td>-/+</td>
+                  <td>{log?.creationTimestamp}</td>
+                </tr>
+              );
+            })}
+        </tbody>
       </table>
       <ReactPaginate
         previousLabel="<"

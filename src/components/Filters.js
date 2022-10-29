@@ -1,34 +1,128 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Filters.css";
 
-const Filters = () => {
+const Filters = ({
+  actionsType,
+  applicationsType,
+  onLogFilter,
+  onAppIdFilter,
+  onActionTypeFilter,
+  onApplicationTypeFilter,
+  onDateFilter,
+}) => {
+  const [field, setField] = useState('')
+  const [filters, setFilters] = useState({
+    logId: "",
+    actionType: "",
+    applicationType: "",
+    fromDate: "",
+    toDate: "",
+    applicationId: "",
+  });
+
+  const handleInput = (field) => (event) => {
+    const { value } = event.target;
+
+    setFilters({
+      ...filters,
+      [field]: value,
+    });
+setField(field)
+    
+    switch (field) {
+      case "logId":
+        onLogFilter(value);
+        break;
+      case "applicationId":
+        onAppIdFilter(value);
+        break;
+      case "actionType":
+        onActionTypeFilter(value);
+        break;
+      case "applicationType":
+        onApplicationTypeFilter(value);
+        break;
+      case "fromDate":
+        onDateFilter(value, "fromDate");
+        break;
+      case "toDate":
+        break;
+      default:
+        break;
+    }
+  };
+  const handleSearchBtn = () =>{
+    console.log(field,"sd");
+  }
+
   return (
     <div className="filters__controls">
       <div className="filters__control">
-        <label>Employee Name</label>
-        <input type="text" placeholder="e.g Admin.User"/>
+        <label>Log ID</label>
+        <input
+          type="text"
+          placeholder="e.g Admin.User"
+          value={filters.logId}
+          onChange={handleInput("logId")}
+        />
       </div>
+
       <div className="filters__control">
         <label>Action Type</label>
-        <input type="text" />
+        <select onChange={handleInput("actionType")}>
+          <option value="">select action Type</option>
+          {actionsType.map((type) => {
+            return (
+              <option value={type} key={type}>
+                {type}
+              </option>
+            );
+          })}
+        </select>
       </div>
+
       <div className="filters__control">
         <label>Application Type</label>
-        <input type="text" />
+        <select onChange={handleInput("applicationType")}>
+          <option value="">select application type</option>
+          {applicationsType.map((type) => {
+            return (
+              <option value={type} key={type}>
+                {type}
+              </option>
+            );
+          })}
+        </select>
       </div>
+
       <div className="filters__control">
         <label>From Date</label>
-        <input type="date" />
+        <input
+          type="date"
+          value={filters.fromDate}
+          onChange={handleInput("fromDate")}
+        />
       </div>
+
       <div className="filters__control">
         <label>To Date</label>
-        <input type="date" />
+        <input
+          type="date"
+          value={filters.toDate}
+          min={filters.fromDate}
+          onChange={handleInput("toDate")}
+        />
       </div>
+
       <div className="filters__control">
         <label>Application ID</label>
-        <input type="text" />
+        <input
+          type="text"
+          value={filters.applicationId}
+          onChange={handleInput("applicationId")}
+        />
       </div>
-      <button>Search Logger</button>
+      <button onClick={handleSearchBtn}>Search Logger</button>
     </div>
   );
 };

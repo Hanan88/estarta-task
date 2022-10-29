@@ -10,7 +10,8 @@
   font-weight: 500;
   margin-bottom: 0.3rem;
 }
-.filters__control input {
+.filters__control input,
+.filters__control select {
   padding: 0.5rem;
   border-radius: 6px;
   width: 13rem;
