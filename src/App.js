@@ -12,6 +12,8 @@ dayjs.extend(isSameOrAfter);
 
 const App = () => {
   const [logData, setLogData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
   const actionTypeData = () => {
     return [...new Set(logData.map((item) => item.actionType))];
   };
@@ -25,6 +27,7 @@ const App = () => {
         "https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f"
       );
       setLogData(response.data.result.auditLog);
+      setFilteredData(response.data.result.auditLog);
     } catch (error) {
       console.log(error);
     }
@@ -35,12 +38,12 @@ const App = () => {
   }, []);
 
   const handleLogFilter = (logId) => {
-    const filteredData = logData.filter((item) => {
+    const filterData = logData.filter((item) => {
       if (item.logId.toString().toLowerCase().includes(logId.toLowerCase())) {
         return item;
       }
     });
-    setLogData(filteredData);
+    setFilteredData(filterData);
   };
 
   const handleAppIdFilter = (appId) => {
@@ -54,7 +57,7 @@ const App = () => {
         return item;
       }
     });
-    setLogData(filteredData);
+    setFilteredData(filteredData);
   };
 
   const handleActionTypeFilter = (actionType) => {
@@ -63,7 +66,7 @@ const App = () => {
         return item;
       }
     });
-    setLogData(filteredData);
+    setFilteredData(filteredData);
   };
 
   const handleApplicationTypeFilter = (applicationType) => {
@@ -72,7 +75,7 @@ const App = () => {
         return item;
       }
     });
-    setLogData(filteredData);
+    setFilteredData(filteredData);
   };
 
   const handleDateFilter = (date, field) => {
@@ -82,9 +85,14 @@ const App = () => {
         dayjs(item.creationTimestamp).isSameOrAfter(dayjs(date))
       ) {
         return item;
+      } else if (
+        field === "toDate" &&
+        dayjs(item.creationTimestamp).isSameOrBefore(dayjs(date))
+      ) {
+        return item;
       }
     });
-    setLogData(filteredData);
+    setFilteredData(filteredData);
   };
 
   return (
@@ -99,7 +107,12 @@ const App = () => {
         onApplicationTypeFilter={handleApplicationTypeFilter}
         onDateFilter={handleDateFilter}
       />
-      <Logs logData={logData} setLogData={setLogData} />
+      <Logs
+        logData={logData}
+        setLogData={setLogData}
+        filteredData={filteredData}
+        setFilteredData={setFilteredData}
+      />
     </div>
   );
 };

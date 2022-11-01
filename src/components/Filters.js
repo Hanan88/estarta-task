@@ -44,12 +44,14 @@ const Filters = ({
         onDateFilter(value, "fromDate");
         break;
       case "toDate":
+        onDateFilter(value, "toDate");
         break;
       default:
         break;
     }
   };
 
+  console.log(filters.fromDate,filters.toDate);
   return (
     <div className="filters__controls">
       <div className="filters__control">
