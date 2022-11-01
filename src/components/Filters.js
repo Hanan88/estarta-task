@@ -14,10 +14,11 @@ const Filters = ({
     logId: "",
     actionType: "",
     applicationType: "",
-    fromDate: "",
-    toDate: "",
     applicationId: "",
   });
+
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
   const handleInput = (field) => (event) => {
     const { value } = event.target;
@@ -41,17 +42,18 @@ const Filters = ({
         onApplicationTypeFilter(value);
         break;
       case "fromDate":
-        onDateFilter(value, "fromDate");
+        setFromDate(value);
+        onDateFilter(fromDate, toDate);
         break;
       case "toDate":
-        onDateFilter(value, "toDate");
+        setToDate(value);
+        onDateFilter(fromDate, toDate);
         break;
       default:
         break;
     }
   };
-
-  console.log(filters.fromDate,filters.toDate);
+  
   return (
     <div className="filters__controls">
       <div className="filters__control">
@@ -96,7 +98,7 @@ const Filters = ({
         <label>From Date</label>
         <input
           type="date"
-          value={filters.fromDate}
+          value={fromDate}
           onChange={handleInput("fromDate")}
         />
       </div>
@@ -105,8 +107,8 @@ const Filters = ({
         <label>To Date</label>
         <input
           type="date"
-          value={filters.toDate}
-          min={filters.fromDate}
+          value={toDate}
+          min={fromDate}
           onChange={handleInput("toDate")}
         />
       </div>

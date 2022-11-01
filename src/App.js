@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 
 const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
 const isSameOrBefore = require("dayjs/plugin/isSameOrBefore");
+const isBetween = require("dayjs/plugin/isBetween");
+dayjs.extend(isBetween);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
@@ -78,23 +80,34 @@ const App = () => {
     setFilteredData(filteredData);
   };
 
-  const handleDateFilter = (date, field) => {
+  const handleDateFilter = (fromDate, toDate) => {
+    console.log("=====");
     const filteredData = logData.filter((item) => {
       if (
-        field === "fromDate" &&
-        dayjs(item.creationTimestamp).isSameOrAfter(dayjs(date))
+        fromDate &&
+        toDate &&
+        dayjs(item.creationTimestamp).isBetween(
+          dayjs(fromDate),
+          dayjs(toDate),
+          "year"
+        )
+      ) {
+        console.log("eee");
+        return item;
+      } else if (
+        fromDate &&
+        dayjs(item.creationTimestamp).isSameOrAfter(dayjs(fromDate))
       ) {
         return item;
       } else if (
-        field === "toDate" &&
-        dayjs(item.creationTimestamp).isSameOrBefore(dayjs(date))
+        toDate &&
+        dayjs(item.creationTimestamp).isSameOrBefore(dayjs(toDate))
       ) {
         return item;
       }
     });
     setFilteredData(filteredData);
   };
-
   return (
     <div className="container">
       <Breadcrumb />
